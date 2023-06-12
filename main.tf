@@ -97,6 +97,20 @@ resource "aws_security_group" "prometheus_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  egress {
+    description = "Allow traffic to internet for Package installation"
+    from_port   = 9001
+    to_port     = 9001
+    protocol    = "tcp"
+    cidr_blocks = ["MongoDB_SG"]
+  }
+  egress {
+    description = "Allow traffic to internet for Package installation"
+    from_port   = 9114
+    to_port     = 9114
+    protocol    = "tcp"
+    cidr_blocks = ["${var.project_name_prefix}-elasticsearch-sg"]
+  }
 }
 
 data "aws_ami" "amazon_linux_2" {
